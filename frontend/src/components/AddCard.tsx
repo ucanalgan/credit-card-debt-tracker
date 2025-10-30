@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { cardAPI } from '../services/api';
 
 const AddCard = () => {
   const navigate = useNavigate();
@@ -13,23 +13,26 @@ const AddCard = () => {
     dueDate: '',
     minimumPayment: '',
   });
+  const [error, setError] = useState('');
 
   const mutation = useMutation({
     mutationFn: async (newCard: any) => {
-      const response = await axios.post('http://localhost:3001/api/cards', {
-        ...newCard,
-        userId: '1', // Şimdilik sabit kullanıcı ID'si
-      });
-      return response.data;
+      return await cardAPI.createCard(newCard);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cards'] });
       navigate('/cards');
     },
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.error || 'Failed to add card. Please try again.';
+      setError(errorMessage);
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
     mutation.mutate({
       ...formData,
       balance: parseFloat(formData.balance),
@@ -126,6 +129,10 @@ const AddCard = () => {
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
+
+        {error && (
+          <div className="text-red-500 text-sm">{error}</div>
+        )}
 
         <div className="flex justify-end space-x-4">
           <button

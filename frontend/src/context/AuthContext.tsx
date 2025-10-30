@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { userAPI } from '../services/api';
+import { authAPI } from '../services/api';
 
 interface User {
   id: string;
@@ -11,7 +11,8 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, name: string) => Promise<User>;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -22,27 +23,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check local storage for user data
-    const storedUser = localStorage.getItem('creditCardUser');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error('Failed to parse stored user data');
-        localStorage.removeItem('creditCardUser');
-      }
+    // Check for token and get user data
+    const token = localStorage.getItem('creditCardToken');
+    if (token) {
+      fetchCurrentUser();
+    } else {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   }, []);
 
-  const login = async (email: string, name: string): Promise<User> => {
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await authAPI.getCurrentUser();
+      setUser(response.user);
+    } catch (error) {
+      console.error('Failed to fetch current user:', error);
+      localStorage.removeItem('creditCardToken');
+      localStorage.removeItem('creditCardUser');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string): Promise<void> => {
     setIsLoading(true);
     try {
-      const userData = await userAPI.createUser({ email, name });
-      setUser(userData);
-      localStorage.setItem('creditCardUser', JSON.stringify(userData));
-      return userData;
+      const response = await authAPI.login({ email, password });
+      setUser(response.user);
+      localStorage.setItem('creditCardToken', response.token);
+      localStorage.setItem('creditCardUser', JSON.stringify(response.user));
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -51,8 +60,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const register = async (name: string, email: string, password: string): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const response = await authAPI.register({ name, email, password });
+      setUser(response.user);
+      localStorage.setItem('creditCardToken', response.token);
+      localStorage.setItem('creditCardUser', JSON.stringify(response.user));
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('creditCardToken');
     localStorage.removeItem('creditCardUser');
   };
 
@@ -63,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!user,
         isLoading,
         login,
+        register,
         logout,
       }}
     >

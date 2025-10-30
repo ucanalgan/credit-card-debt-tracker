@@ -1,371 +1,588 @@
-# Credit Card Debt Tracking Application
+# 💳 Credit Card Debt Tracker
 
-<div align="center">
+A full-stack web application to help you track and manage your credit card debts efficiently. Built with **React**, **Node.js/Express**, **PostgreSQL**, and **Prisma ORM**.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![React](https://img.shields.io/badge/React-18.x-61DAFB.svg?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?logo=typescript)
-![Express](https://img.shields.io/badge/Express-4.x-000000.svg?logo=express)
-![Prisma](https://img.shields.io/badge/Prisma-4.x-2D3748.svg?logo=prisma)
+![License](https://img.shields.io/badge/license-ISC-blue.svg)
+![Node](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13%2B-blue.svg)
 
-A modern, responsive web application to track and manage credit card debts with advanced visualization and analytics.
+---
 
-[Features](#features) •
-[Screenshots](#screenshots) •
-[Tech Stack](#tech-stack) •
-[Installation](#installation) •
-[Usage](#usage) •
-[API Documentation](#api-documentation) •
-[Contributing](#contributing) •
-[License](#license)
+## 📋 Table of Contents
 
-</div>
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Screenshots](#-screenshots)
+- [Getting Started](#-getting-started)
+- [Installation](#-installation)
+- [Environment Variables](#-environment-variables)
+- [Database Setup](#-database-setup)
+- [Running the Application](#-running-the-application)
+- [API Documentation](#-api-documentation)
+- [Project Structure](#-project-structure)
+- [Security](#-security)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-## 📋 Features
+---
 
-<details open>
-<summary><strong>Core Features</strong></summary>
+## ✨ Features
 
-- **Multi-Card Management** - Track unlimited number of credit cards
-- **Comprehensive Debt Tracking** - Monitor balance, due date, interest rate, and minimum payments
-- **Dashboard & Analytics** - Visualize your debt journey with interactive charts
-- **Transaction History** - Record and categorize all payments and purchases
-- **Payment Alerts** - Get notified before due dates to avoid late fees
-- **Debt Reduction Strategies** - Compare different payment approaches (snowball, avalanche)
-- **Multi-Currency Support** - Handle cards in different currencies
-- **Secure Authentication** - Protect your financial data
-- **Responsive Design** - Access from any device (desktop, tablet, mobile)
+### 🔐 Authentication & Security
+- **JWT-based authentication** with secure password hashing (bcrypt)
+- **Protected routes** - All financial data requires authentication
+- **Rate limiting** - Prevents brute force attacks (100 req/15min)
+- **Security headers** - Helmet.js for HTTP security
+- **CORS protection** - Configurable origin restrictions
 
-</details>
+### 💰 Financial Management
+- **Multiple credit cards** - Track unlimited cards in one place
+- **Real-time balance tracking** - Automatically updates with transactions
+- **Payment tracking** - Record payments and purchases
+- **Due date reminders** - Visual dashboard of upcoming payments
+- **Interest rate monitoring** - Track APR for each card
+- **Minimum payment calculator** - Never miss minimum payment amounts
 
-## 📸 Screenshots
+### 📊 Dashboard & Analytics
+- **Interactive charts** - Visualize your debt using Chart.js
+- **Total debt overview** - See all debts at a glance
+- **Payment obligations** - Summary of all minimum payments
+- **Card details** - Detailed view of each card
 
-<div align="center">
-    <p><i>Dashboard View</i></p>
-    <img src="https://via.placeholder.com/800x450?text=Dashboard+Screenshot" alt="Dashboard Screenshot" width="800"/>
-    
-    <p><i>Card Management</i></p>
-    <img src="https://via.placeholder.com/800x450?text=Card+Management+Screenshot" alt="Card Management Screenshot" width="800"/>
-    
-    <p><i>Transaction History</i></p>
-    <img src="https://via.placeholder.com/800x450?text=Transaction+History+Screenshot" alt="Transaction History Screenshot" width="800"/>
-</div>
+### 🎨 User Experience
+- **Responsive design** - Works on desktop, tablet, and mobile
+- **Modern UI** - Built with Tailwind CSS
+- **Fast loading** - React Query for optimized data fetching
+- **Error handling** - User-friendly error messages
+- **Loading states** - Clear feedback during operations
+
+---
 
 ## 🛠️ Tech Stack
 
-<details>
-<summary><strong>Frontend Architecture</strong></summary>
+### Frontend
+- **React 19.0** - Modern UI library
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Lightning-fast build tool
+- **Tailwind CSS 4.1** - Utility-first CSS framework
+- **React Router 7.4** - Client-side routing
+- **TanStack React Query 5.7** - Server state management
+- **Axios** - HTTP client
+- **Chart.js** - Data visualization
+- **HeadlessUI & HeroIcons** - Accessible UI components
 
-- **Framework**: React.js with TypeScript
-- **State Management**: React Query for server state, Context API for app state
-- **Styling**: Tailwind CSS with custom theming
-- **Routing**: React Router v6 with protected routes
-- **Data Visualization**: Chart.js with React wrappers
-- **Form Handling**: React Hook Form with Yup validation
-- **HTTP Client**: Axios with interceptors for authentication
-- **Optimization**: Code splitting, lazy loading, memoization
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express 5.1** - Web framework
+- **JavaScript (ES6+)** - Modern JavaScript
+- **Prisma 6.5** - Next-generation ORM
+- **PostgreSQL** - Robust relational database
+- **JWT (jsonwebtoken)** - Authentication tokens
+- **bcryptjs** - Password hashing
+- **Helmet** - Security middleware
+- **express-rate-limit** - API rate limiting
+- **CORS** - Cross-origin resource sharing
 
-</details>
+### Development Tools
+- **ESLint** - Code linting
+- **Nodemon** - Auto-restart development server
+- **Prisma Studio** - Database GUI
 
-<details>
-<summary><strong>Backend Architecture</strong></summary>
+---
 
-- **Runtime**: Node.js with Express.js
-- **Language**: TypeScript
-- **Database**: PostgreSQL with Prisma ORM
-- **API Design**: RESTful architecture with middleware pattern
-- **Validation**: Schema validation for requests
-- **Error Handling**: Centralized error management
-- **Logging**: Structured logging with request tracing
-- **Security**: Input sanitization, rate limiting
+## 📸 Screenshots
 
-</details>
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+*Overview of all credit cards, total debt, and upcoming payments*
 
-<details>
-<summary><strong>DevOps & Tools</strong></summary>
+### Card Management
+![Cards](./screenshots/cards.png)
+*Manage multiple credit cards with detailed information*
 
-- **Version Control**: Git with GitHub
-- **Development**: Hot reloading, ESLint, Prettier
-- **Testing**: Jest, React Testing Library, Supertest
-- **Documentation**: OpenAPI/Swagger
-- **Deployment**: Docker containers (optional)
+### Authentication
+![Login](./screenshots/login.png)
+*Secure login and registration system*
 
-</details>
+---
 
-## 🚀 Installation
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v14.x or higher)
-- PostgreSQL (v13.x or higher)
-- npm or yarn
+Before you begin, ensure you have the following installed:
 
-### Automated Installation (Windows 11)
+- **Node.js** (v16 or higher) - [Download](https://nodejs.org/)
+- **PostgreSQL** (v13 or higher) - [Download](https://www.postgresql.org/download/)
+- **npm** or **yarn** (comes with Node.js)
+- **Git** (optional) - [Download](https://git-scm.com/)
 
-We provide a PowerShell script for easy setup on Windows systems:
+---
 
-```powershell
-# Clone the repository
-git clone https://github.com/yourusername/credit-card-tracker.git
-cd credit-card-tracker
+## 📦 Installation
 
-# Run the installation script
-.\install.ps1
-```
-
-### Manual Installation
-
-<details>
-<summary><strong>Step-by-Step Guide</strong></summary>
-
-1. **Clone the repository**
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/credit-card-tracker.git
-cd credit-card-tracker
+git clone https://github.com/yourusername/Credit_card.git
+cd Credit_card
 ```
 
-2. **Set up the backend**
+### 2. Install Backend Dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### 3. Install Frontend Dependencies
+
+```bash
+cd ../frontend
+npm install
+```
+
+---
+
+## 🔧 Environment Variables
+
+### Backend Configuration
+
+Create a `.env` file in the `backend` directory:
+
+```env
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/credit_card_db?schema=public"
+
+# CORS
+CORS_ORIGIN=http://localhost:5173
+
+# JWT Authentication
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRES_IN=7d
+```
+
+**Important**:
+- Replace `username` and `password` with your PostgreSQL credentials
+- Change `JWT_SECRET` to a random string in production
+- Never commit the `.env` file to version control
+
+> 💡 **Tip**: Use `.env.example` as a template (already provided in the project)
+
+---
+
+## 🗄️ Database Setup
+
+### 1. Create PostgreSQL Database
+
+**Using pgAdmin:**
+1. Open pgAdmin
+2. Right-click on "Databases" → "Create" → "Database"
+3. Database name: `credit_card_db`
+4. Click "Save"
+
+**Using psql:**
+```bash
+psql -U postgres
+CREATE DATABASE credit_card_db;
+\q
+```
+
+### 2. Run Prisma Migrations
 
 ```bash
 cd backend
 
-# Install dependencies
-npm install
+# Generate Prisma Client
+npx prisma generate
 
-# Create environment file
-cp .env.example .env
-# Edit the .env file with your database details:
-# DATABASE_URL="postgresql://username:password@localhost:5432/credit_card_db"
-# PORT=3001
-# NODE_ENV=development
+# Run migrations to create tables
+npx prisma migrate dev --name init
 
-# Set up the database
-npx prisma migrate dev
+# (Optional) Open Prisma Studio to view database
+npx prisma studio
 ```
 
-3. **Set up the frontend**
+### Database Schema
 
+The application uses three main tables:
+
+**Users**
+- `id` (UUID, Primary Key)
+- `email` (Unique)
+- `name`
+- `password` (Hashed with bcrypt)
+- `createdAt`, `updatedAt`
+
+**CreditCards**
+- `id` (UUID, Primary Key)
+- `name` (Card name)
+- `balance` (Current debt)
+- `interestRate` (APR percentage)
+- `dueDate` (Payment due date)
+- `minimumPayment`
+- `userId` (Foreign Key → Users)
+- `createdAt`, `updatedAt`
+
+**Transactions**
+- `id` (UUID, Primary Key)
+- `amount`
+- `type` ("payment" or "purchase")
+- `date`
+- `description` (Optional)
+- `cardId` (Foreign Key → CreditCards)
+- `createdAt`, `updatedAt`
+
+---
+
+## 🏃 Running the Application
+
+### Development Mode
+
+**Terminal 1 - Backend:**
 ```bash
-cd ../frontend
-
-# Install dependencies
-npm install
+cd backend
+npm run dev
 ```
+Backend will run on `http://localhost:3001`
 
-4. **Start the application**
-
+**Terminal 2 - Frontend:**
 ```bash
-# Start backend (from backend directory)
-npm run dev
-
-# Start frontend (from frontend directory)
+cd frontend
 npm run dev
 ```
+Frontend will run on `http://localhost:5173`
 
-</details>
+### Production Build
 
-## 📘 Usage
+**Backend:**
+```bash
+cd backend
+npm start
+```
 
-### Quick Start Guide
+**Frontend:**
+```bash
+cd frontend
+npm run build
+npm run preview
+```
 
-1. **Register/Login**: Start by creating an account or logging in
-2. **Add Your Cards**: Enter your credit card details (name, balance, interest rate, etc.)
-3. **Track Transactions**: Record your payments and purchases
-4. **Monitor Dashboard**: View your overall debt status and trends
-5. **Set Reminders**: Configure alerts for upcoming due dates
-
-### Advanced Features
-
-<details>
-<summary><strong>Debt Reduction Planning</strong></summary>
-
-The application provides tools to help you plan your debt reduction strategy:
-
-1. Navigate to the "Strategies" section
-2. Choose between different approaches:
-   - **Snowball Method**: Pay off smallest balances first
-   - **Avalanche Method**: Pay off highest interest rates first
-3. View projected payoff timeline and total interest saved
-
-</details>
-
-<details>
-<summary><strong>Data Export</strong></summary>
-
-Export your data for record-keeping or external analysis:
-
-1. Go to "Account Settings" > "Data Export"
-2. Choose your preferred format (CSV, PDF)
-3. Select date range and data types to include
-4. Download the generated file
-
-</details>
+---
 
 ## 📚 API Documentation
 
+### Base URL
+```
+http://localhost:3001/api
+```
+
 ### Authentication Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST   | `/api/users` | Create a new user account |
-| GET    | `/api/users/:id` | Get user profile data |
+#### Register User
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-### Card Management Endpoints
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/api/cards` | Get all cards |
-| GET    | `/api/cards/:id` | Get card details by ID |
-| POST   | `/api/cards` | Create a new card |
-| PUT    | `/api/cards/:id` | Update card details |
-| DELETE | `/api/cards/:id` | Delete a card |
+**Response:**
+```json
+{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "uuid",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+#### Login
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+#### Get Current User
+```http
+GET /api/auth/me
+Authorization: Bearer <token>
+```
+
+### Credit Card Endpoints
+
+All endpoints require `Authorization: Bearer <token>` header.
+
+#### Get All Cards
+```http
+GET /api/cards
+```
+
+#### Create Card
+```http
+POST /api/cards
+Content-Type: application/json
+
+{
+  "name": "Visa Platinum",
+  "balance": 5000,
+  "interestRate": 18.5,
+  "dueDate": "2024-02-15",
+  "minimumPayment": 150
+}
+```
+
+#### Get Card by ID
+```http
+GET /api/cards/:id
+```
+
+#### Update Card
+```http
+PUT /api/cards/:id
+Content-Type: application/json
+
+{
+  "balance": 4500,
+  "minimumPayment": 135
+}
+```
+
+#### Delete Card
+```http
+DELETE /api/cards/:id
+```
 
 ### Transaction Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/api/transactions` | Get all transactions |
-| GET    | `/api/transactions/card/:cardId` | Get transactions for a specific card |
-| POST   | `/api/transactions` | Create a new transaction |
-| DELETE | `/api/transactions/:id` | Delete a transaction |
+#### Create Transaction
+```http
+POST /api/transactions
+Content-Type: application/json
 
-## ✨ Improvements Implemented
-
-1. **Enhanced Error Handling**
-   - Centralized error handler middleware
-   - Custom AppError class for consistent error responses
-   - Detailed validation with informative feedback messages
-   - Global error capture for unhandled exceptions
-
-2. **Restructured API Architecture**
-   - Modular route organization (users, cards, transactions)
-   - Middleware-based request processing pipeline
-   - Health check and monitoring endpoints
-   - Request logging and performance tracking
-
-3. **Authentication System**
-   - Context-based auth state management
-   - Local storage persistence with security measures
-   - Protected routes with redirect handling
-   - Session expiration management
-
-4. **Advanced API Service Layer**
-   - Centralized API client with request/response interceptors
-   - Typed API functions with proper error handling
-   - Request caching and deduplication
-   - Offline support and request queueing
-
-5. **Responsive UI Components**
-   - Mobile-first design approach
-   - Adaptive layouts for all screen sizes
-   - Accessible interface (WCAG compliant)
-   - Dark/light mode support
-
-6. **Data Integrity & Performance**
-   - Transaction-based balance updates
-   - Optimistic UI updates
-   - Database transaction support
-   - Proper cascade operations and referential integrity
-
-## 🔧 Troubleshooting
-
-<details>
-<summary><strong>Common Issues</strong></summary>
-
-### Database Connection Errors
-
-```
-Error: Failed to set up the database. Please check your PostgreSQL connection.
+{
+  "amount": 500,
+  "type": "payment",
+  "date": "2024-01-15",
+  "description": "January payment",
+  "cardId": "card-uuid"
+}
 ```
 
-**Solution**: 
-1. Verify PostgreSQL is running: `pg_ctl status`
-2. Check your .env file for correct credentials
-3. Ensure the database exists: `createdb credit_card_db`
-4. Check network access if using remote database
+#### Get Card Transactions
+```http
+GET /api/transactions/card/:cardId
+```
 
-### Frontend Build Issues
+#### Delete Transaction
+```http
+DELETE /api/transactions/:id
+```
 
-**Solution**:
-1. Clear node_modules and reinstall: 
-   ```
-   rm -rf node_modules
-   npm install
-   ```
-2. Check for TypeScript errors: `npm run tsc`
-3. Update dependencies: `npm update`
+For complete API documentation, see [backend/README.md](./backend/README.md)
 
-### Login Problems
+---
 
-**Solution**:
-1. Clear browser cookies and local storage
-2. Check backend logs for authentication errors
-3. Verify database has users table properly migrated
+## 📁 Project Structure
 
-</details>
+```
+Credit_card/
+├── backend/                    # Backend API
+│   ├── src/
+│   │   ├── index.js           # Express server entry point
+│   │   ├── middleware/        # Custom middleware
+│   │   │   ├── auth.js        # JWT authentication
+│   │   │   └── errorHandler.js
+│   │   └── routes/            # API routes
+│   │       ├── auth.js        # Authentication routes
+│   │       ├── users.js       # User management
+│   │       ├── cards.js       # Credit card CRUD
+│   │       └── transactions.js
+│   ├── prisma/
+│   │   └── schema.prisma      # Database schema
+│   ├── .env.example           # Environment template
+│   ├── package.json
+│   └── README.md
+│
+├── frontend/                   # React frontend
+│   ├── src/
+│   │   ├── components/        # React components
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── CardList.tsx
+│   │   │   ├── AddCard.tsx
+│   │   │   ├── Login.tsx
+│   │   │   └── Navbar.tsx
+│   │   ├── context/           # React Context
+│   │   │   └── AuthContext.tsx
+│   │   ├── services/          # API services
+│   │   │   └── api.ts
+│   │   ├── App.tsx            # Main app component
+│   │   └── main.tsx           # Entry point
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── .gitignore
+├── README.md                   # This file
+├── SETUP_GUIDE.md             # Detailed setup guide
+└── POSTGRESQL_SETUP.md        # PostgreSQL installation guide
+```
+
+---
+
+## 🔒 Security
+
+This application implements multiple security measures:
+
+### 🛡️ Authentication & Authorization
+- **JWT tokens** with expiration (7 days)
+- **Bcrypt password hashing** (10 salt rounds)
+- **Token validation** on every protected route
+- **User ownership verification** (users can only access their own data)
+
+### 🚨 API Security
+- **Rate limiting**: 100 requests per 15 minutes per IP
+- **Helmet.js**: Sets secure HTTP headers
+- **CORS**: Restricted to frontend origin
+- **Input validation**: All inputs validated before processing
+- **SQL injection protection**: Prisma ORM parameterized queries
+
+### 🔐 Best Practices
+- **Environment variables** for sensitive data
+- **No secrets in code** or version control
+- **Error messages** don't reveal sensitive information
+- **HTTPS recommended** for production
+- **Regular dependency updates**
+
+### ⚠️ Security Checklist for Production
+
+- [ ] Change JWT_SECRET to a strong random string
+- [ ] Use HTTPS (not HTTP)
+- [ ] Enable PostgreSQL SSL
+- [ ] Set NODE_ENV=production
+- [ ] Use strong database passwords
+- [ ] Enable database backups
+- [ ] Set up monitoring and logging
+- [ ] Use a reverse proxy (nginx)
+- [ ] Implement CSRF protection
+- [ ] Add input sanitization middleware
+
+---
 
 ## 🤝 Contributing
 
-We welcome contributions to improve the Credit Card Debt Tracker! Here's how you can help:
+Contributions are welcome! Please follow these steps:
 
-<details>
-<summary><strong>Contribution Guidelines</strong></summary>
-
-### Development Process
-
-1. Fork the repository
-2. Create a feature branch:
-   ```
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```
-   git commit -m "Add some feature"
-   ```
-4. Push to your branch:
-   ```
-   git push origin feature/your-feature-name
-   ```
-5. Create a Pull Request
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
 
 ### Coding Standards
+- Follow ESLint rules
+- Write meaningful commit messages
+- Add comments for complex logic
+- Update documentation as needed
+- Test your changes before submitting
 
-- Follow TypeScript best practices
-- Maintain 90%+ test coverage for new code
-- Follow existing patterns and architectural decisions
-- Document all public functions and components
+---
 
-### Feature Requests and Bug Reports
+## 🐛 Troubleshooting
 
-Please use the GitHub Issues section to report bugs or request features.
+### Backend won't start
+- **Check PostgreSQL is running**: `Get-Service -Name "postgresql*"` (Windows)
+- **Verify DATABASE_URL** in `.env`
+- **Check port 3001** is not in use
 
-</details>
+### Frontend can't connect
+- **Ensure backend is running** on port 3001
+- **Check CORS_ORIGIN** matches frontend URL
+- **Clear browser cache** and localStorage
 
-## 📊 Future Roadmap
+### Database migration fails
+- **PostgreSQL must be running**
+- **Database must exist** (`credit_card_db`)
+- **Correct credentials** in DATABASE_URL
 
-- **Mobile App** - Native mobile applications for iOS and Android
-- **Budgeting Tools** - Integration with income and expense tracking
-- **AI Insights** - Machine learning for spending pattern analysis
-- **Financial Goal Setting** - Define and track progress toward financial goals
-- **Integration with Banking APIs** - Automatic transaction import
+For more help, see:
+- [SETUP_GUIDE.md](./SETUP_GUIDE.md) - Detailed setup instructions
+- [POSTGRESQL_SETUP.md](./POSTGRESQL_SETUP.md) - PostgreSQL installation
+- [backend/README.md](./backend/README.md) - API documentation
 
-## 📜 License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📈 Future Enhancements
 
-## 🙏 Acknowledgements
+- [ ] Transaction management UI
+- [ ] Payment calculator (debt payoff planning)
+- [ ] Email notifications for due dates
+- [ ] Export data to CSV/PDF
+- [ ] Dark mode toggle
+- [ ] Multi-language support (Turkish/English)
+- [ ] Mobile app (React Native)
+- [ ] Credit score tracking integration
+- [ ] Budget planning features
+- [ ] Recurring payment reminders
+- [ ] Interest calculation over time
+- [ ] Payment history analytics
 
-- [React](https://reactjs.org/) - Frontend framework
-- [Express](https://expressjs.com/) - Backend framework
-- [Prisma](https://www.prisma.io/) - ORM
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Chart.js](https://www.chartjs.org/) - Data visualization
+---
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Email: your.email@example.com
+
+---
+
+## 🙏 Acknowledgments
+
+- [Prisma](https://www.prisma.io/) - Amazing database toolkit
+- [React](https://react.dev/) - The library for web and native interfaces
+- [Express](https://expressjs.com/) - Fast, unopinionated web framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Chart.js](https://www.chartjs.org/) - Simple yet flexible charting
+
+---
+
+## 📞 Support
+
+If you have any questions or need help, please:
+1. Check the [SETUP_GUIDE.md](./SETUP_GUIDE.md)
+2. Review [Troubleshooting](#-troubleshooting) section
+3. Open an issue on GitHub
+4. Contact via email
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ by ucanalgan</p>
-  <p>© 2025 Credit Card Debt Tracker</p>
-</div> 
+
+**Made with ❤️ and ☕**
+
+[⬆ Back to Top](#-credit-card-debt-tracker)
+
+</div>

@@ -1,18 +1,29 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { cardAPI } from '../services/api';
 
 const CardList = () => {
-  const { data: cards, isLoading } = useQuery({
+  const { data: cards, isLoading, error } = useQuery({
     queryKey: ['cards'],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:3001/api/users/1/cards');
-      return response.data;
+      return await cardAPI.getCards();
     },
   });
 
   if (isLoading) {
-    return <div>Yükleniyor...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-gray-600">Yükleniyor...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-red-600">Kartlar yüklenirken bir hata oluştu.</div>
+      </div>
+    );
   }
 
   return (

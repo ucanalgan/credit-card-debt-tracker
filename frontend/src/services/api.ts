@@ -8,23 +8,56 @@ const api = axios.create({
   },
 });
 
-// API error handling
+// Request interceptor to add JWT token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('creditCardToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     const message = error.response?.data?.error || 'Something went wrong';
     console.error('API Error:', message);
+
+    // If 401 Unauthorized, clear token and redirect to login
+    if (error.response?.status === 401) {
+      localStorage.removeItem('creditCardToken');
+      localStorage.removeItem('creditCardUser');
+      window.location.href = '/login';
+    }
+
     return Promise.reject(error);
   }
 );
 
-// User API calls
-export const userAPI = {
-  createUser: async (userData: { name: string; email: string }) => {
-    const response = await api.post('/users', userData);
+// Authentication API calls
+export const authAPI = {
+  register: async (userData: { name: string; email: string; password: string }) => {
+    const response = await api.post('/auth/register', userData);
     return response.data;
   },
-  
+
+  login: async (credentials: { email: string; password: string }) => {
+    const response = await api.post('/auth/login', credentials);
+    return response.data;
+  },
+
+  getCurrentUser: async () => {
+    const response = await api.get('/auth/me');
+    return response.data;
+  },
+};
+
+// User API calls
+export const userAPI = {
   getUser: async (userId: string) => {
     const response = await api.get(`/users/${userId}`);
     return response.data;
@@ -54,7 +87,6 @@ export const cardAPI = {
     interestRate: number;
     dueDate: string;
     minimumPayment: number;
-    userId: string;
   }) => {
     const response = await api.post('/cards', cardData);
     return response.data;

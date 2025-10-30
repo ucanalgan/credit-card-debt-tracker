@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import axios from 'axios';
+import { cardAPI } from '../services/api';
 
 ChartJS.register(
   CategoryScale,
@@ -23,16 +23,27 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { data: cards, isLoading } = useQuery({
+  const { data: cards, isLoading, error } = useQuery({
     queryKey: ['cards'],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:3001/api/users/1/cards');
-      return response.data;
+      return await cardAPI.getCards();
     },
   });
 
   if (isLoading) {
-    return <div>Yükleniyor...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-gray-600">Yükleniyor...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-red-600">Dashboard yüklenirken bir hata oluştu.</div>
+      </div>
+    );
   }
 
   const totalDebt = cards?.reduce((sum: number, card: any) => sum + card.balance, 0) || 0;
