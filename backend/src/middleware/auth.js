@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { AppError, asyncHandler } = require('./errorHandler');
-const { PrismaClient } = require('@prisma/client');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../db');
 
 /**
  * Middleware to verify JWT token and authenticate user

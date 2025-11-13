@@ -1,10 +1,9 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
 const { AppError, asyncHandler } = require('../middleware/errorHandler');
 const { authenticate } = require('../middleware/auth');
+const { prisma } = require('../db');
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // Protect all card routes with authentication
 router.use(authenticate);

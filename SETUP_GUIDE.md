@@ -41,7 +41,7 @@ Before starting, ensure you have:
 2. Create a new database:
 
 ```sql
-CREATE DATABASE credit_card_db;
+CREATE DATABASE credit_card_debt_tracker;
 ```
 
 3. Note your database credentials (username, password, host, port)
@@ -75,7 +75,7 @@ PORT=3001
 NODE_ENV=development
 
 # Database - UPDATE THIS WITH YOUR CREDENTIALS
-DATABASE_URL="postgresql://YOUR_USERNAME:YOUR_PASSWORD@localhost:5432/credit_card_db?schema=public"
+DATABASE_URL="postgresql://YOUR_USERNAME:YOUR_PASSWORD@localhost:5432/credit_card_debt_tracker?schema=public"
 
 # CORS
 CORS_ORIGIN=http://localhost:5173
