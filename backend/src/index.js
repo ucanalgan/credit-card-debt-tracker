@@ -2,34 +2,34 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const dotenv = require('dotenv');
-const { PrismaClient } = require('@prisma/client');
+const { validateEnv, config } = require('./config/env');
+const { prisma } = require('./db');
 const { errorHandler } = require('./middleware/errorHandler');
+const { sanitizeInput } = require('./middleware/sanitize');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const transactionRoutes = require('./routes/transactions');
 
-dotenv.config();
+// Validate environment variables before starting
+validateEnv();
 
 const app = express();
-const prisma = new PrismaClient();
-const port = process.env.PORT || 3001;
 
 // Security Middleware
 app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: config.rateLimit.windowMs,
+  max: config.rateLimit.max,
   message: 'Too many requests from this IP, please try again later'
 });
 app.use('/api/', limiter);
 
 // CORS
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: config.cors.origin,
   credentials: true
 }));
 
@@ -37,15 +37,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Input sanitization middleware (must be after body parser)
+app.use(sanitizeInput);
+
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-  next();
-});
-
-// Make prisma available to routes
-app.use((req, res, next) => {
-  req.prisma = prisma;
   next();
 });
 
@@ -76,9 +73,9 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
-  console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
+app.listen(config.port, () => {
+  console.log(`🚀 Server running on port ${config.port}`);
+  console.log(`📝 Environment: ${config.nodeEnv}`);
 });
 
 module.exports = app;

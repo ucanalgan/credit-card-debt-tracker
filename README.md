@@ -156,7 +156,7 @@ PORT=3001
 NODE_ENV=development
 
 # Database
-DATABASE_URL="postgresql://username:password@localhost:5432/credit_card_db?schema=public"
+DATABASE_URL="postgresql://username:password@localhost:5432/credit_card_debt_tracker?schema=public"
 
 # CORS
 CORS_ORIGIN=http://localhost:5173
@@ -182,13 +182,13 @@ JWT_EXPIRES_IN=7d
 **Using pgAdmin:**
 1. Open pgAdmin
 2. Right-click on "Databases" → "Create" → "Database"
-3. Database name: `credit_card_db`
+3. Database name: `credit_card_debt_tracker`
 4. Click "Save"
 
 **Using psql:**
 ```bash
 psql -U postgres
-CREATE DATABASE credit_card_db;
+CREATE DATABASE credit_card_debt_tracker;
 \q
 ```
 
@@ -518,7 +518,7 @@ Contributions are welcome! Please follow these steps:
 
 ### Database migration fails
 - **PostgreSQL must be running**
-- **Database must exist** (`credit_card_db`)
+- **Database must exist** (`credit_card_debt_tracker`)
 - **Correct credentials** in DATABASE_URL
 
 For more help, see:
@@ -553,9 +553,9 @@ This project is licensed under the ISC License.
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+**ucanalgan**
+- GitHub: [@ucanalgan](https://github.com/ucanalgan)
+- Repository: [credit-card-debt-tracker](https://github.com/ucanalgan/credit-card-debt-tracker)
 
 ---
 

@@ -65,7 +65,7 @@ Start-Service -Name "postgresql-x64-14"
 1. pgAdmin'i açın
 2. Sol panelde: **Servers** → **PostgreSQL 14** → **Databases**
 3. Databases'e sağ tık → **Create** → **Database**
-4. Database name: `credit_card_db`
+4. Database name: `credit_card_debt_tracker`
 5. **Save** tıklayın
 
 ### psql ile (Terminal):
@@ -74,7 +74,7 @@ Start-Service -Name "postgresql-x64-14"
 psql -U postgres
 
 # Veritabanı oluştur
-CREATE DATABASE credit_card_db;
+CREATE DATABASE credit_card_debt_tracker;
 
 # Kontrol et
 \l
@@ -91,14 +91,14 @@ Backend `.env` dosyanızı açın ve güncelleyin:
 
 ```env
 # PostgreSQL bağlantı bilgilerinizi yazın
-DATABASE_URL="postgresql://postgres:ŞIFRENIZ@localhost:5432/credit_card_db?schema=public"
+DATABASE_URL="postgresql://postgres:ŞIFRENIZ@localhost:5432/credit_card_debt_tracker?schema=public"
 ```
 
 **Önemli**:
 - `postgres` = PostgreSQL kullanıcı adınız (genelde "postgres")
 - `ŞIFRENIZ` = Kurulum sırasında belirlediğiniz şifre
 - `5432` = Port (varsayılan)
-- `credit_card_db` = Oluşturduğunuz veritabanı adı
+- `credit_card_debt_tracker` = Oluşturduğunuz veritabanı adı
 
 ---
 

@@ -62,8 +62,8 @@ if (-not (Test-Path ".env")) {
     $dbPort = Read-Host "Enter PostgreSQL port (default: 5432)"
     if ([string]::IsNullOrEmpty($dbPort)) { $dbPort = "5432" }
     
-    $dbName = Read-Host "Enter database name (default: credit_card_db)"
-    if ([string]::IsNullOrEmpty($dbName)) { $dbName = "credit_card_db" }
+    $dbName = Read-Host "Enter database name (default: credit_card_debt_tracker)"
+    if ([string]::IsNullOrEmpty($dbName)) { $dbName = "credit_card_debt_tracker" }
     
     $connectionString = "postgresql://${dbUser}:${dbPasswordPlain}@${dbHost}:${dbPort}/${dbName}"
     
